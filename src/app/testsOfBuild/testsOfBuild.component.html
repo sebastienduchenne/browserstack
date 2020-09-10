@@ -1,0 +1,123 @@
+<mat-tab-group animationDuration="0ms">
+      
+    <mat-tab label="Statistiques">
+
+      Filtres :
+      <div style="display: inline;margin: 5px;">
+        <mat-form-field appearance="fill">
+          <mat-label>OS</mat-label>
+          <mat-select [(ngModel)]="selectedOS" (change)="OSFilter()">
+            <mat-option *ngFor="let o of os" [value]="o.value" (click)="OSFilter()">
+              {{o.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div style="display: inline;margin: 5px;">
+        <mat-form-field appearance="fill">
+          <mat-label>Navigateur</mat-label>
+          <mat-select [(ngModel)]="selectedBrowser" (change)="BrowsersFilter()">
+            <mat-option *ngFor="let browser of browsers" [value]="browser.value" (click)="BrowsersFilter()">
+              {{browser.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div> 
+        <div style="width: 400px;">
+          <canvas baseChart
+                  [data]="pieChart.data"
+                  [labels]="pieChart.labels"
+                  [chartType]="pieChart.type"
+                  [colors]="pieChart.color"></canvas>
+        </div>
+
+        <div style="width: 400px;">
+          <canvas baseChart
+                  [data]="lineChart.data"
+                  [labels]="lineChart.labels"
+                  [chartType]="lineChart.type"
+                  [colors]="lineChart.color"></canvas>
+        </div>
+      </div>
+     
+    </mat-tab>
+
+    <mat-tab label="Tests">
+      Filtres :
+      <div style="display: inline; margin: 5px;">
+        <mat-form-field appearance="fill">
+          <mat-label>OS</mat-label>
+          <mat-select [(ngModel)]="selectedOS" (change)="OSFilter()">
+            <mat-option *ngFor="let o of os" [value]="o.value">
+              {{o.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div style="display: inline;margin: 5px;">
+        <mat-form-field appearance="fill">
+          <mat-label>Navigateur</mat-label>
+          <mat-select [(ngModel)]="selectedBrowser" (change)="BrowsersFilter()">
+            <mat-option *ngFor="let browser of browsers" [value]="browser.value">
+              {{browser.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div style="display: inline;">
+        <mat-form-field appearance="fill">
+          <mat-label>Statut</mat-label>
+          <mat-select [(ngModel)]="selectedStatus" (change)="StatusFilter()">
+            <mat-option *ngFor="let stat of status" [value]="stat.value">
+              {{stat.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <table mat-table [dataSource]="dataSource.tests" class="mat-elevation-z8" style="width: 100%;">
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef style="width: 300px;"> Nom </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="statut">
+          <th mat-header-cell *matHeaderCellDef> Statut </th>
+          <td mat-cell *matCellDef="let element"> {{element.statut}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="os">
+          <th mat-header-cell *matHeaderCellDef> OS </th>
+          <td mat-cell *matCellDef="let element"> {{element.os}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="browser">
+          <th mat-header-cell *matHeaderCellDef> Navigateur </th>
+          <td mat-cell *matCellDef="let element"> {{element.browser}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef> Date d'exécution</th>
+          <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="video">
+          <th mat-header-cell *matHeaderCellDef> Vidéo </th>
+          <td mat-cell *matCellDef="let element"> {{element.video}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="details">
+          <th mat-header-cell *matHeaderCellDef> Détails </th>
+          <td mat-cell *matCellDef="let element"> <a href="{{element.details}}" target="_blanck">Détails</a> </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+    </mat-tab>
+
+  </mat-tab-group>

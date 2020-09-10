@@ -1,0 +1,30 @@
+<span *ngIf = "v === true; then condition1 else condition2"
+  style="text-align: center;">
+</span>
+
+<ng-template #condition1>
+  <button (click)="setV()">souscrire</button>
+
+  <p>
+    Vous n'êtes présent dans aucun projet.
+  </p>
+  <p>
+    Le nombre de licence pour LIVE est limité. Ne la choisissez que si vous pensez en avoir vraiment besoin. Si vous ne la choisissez pas, vous pourrez par la suite en faire la demande en cas de besoin.
+  </p>
+  <p>
+    Vous recevrez vos identifiants par email.
+  </p>
+
+</ng-template>
+
+<ng-template #condition2>
+  <nav>
+    <a routerLink="/testsResult" routerLinkActive="active">Résultats des tests</a>
+    <a routerLink="/removeTests" routerLinkActive="active">Supprimer des tests</a>
+    <a routerLink= "/ask" routerLinkActive="active">Demander une option</a>
+    <a href="https://live.browserstack.com/dashboard" target="_blanck">Utiliser LIVE</a>
+    <a routerLink= "/key" routerLinkActive="active">Gérer les clés</a>
+  </nav>
+  <router-outlet></router-outlet>
+</ng-template>
+

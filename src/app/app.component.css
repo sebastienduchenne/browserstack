@@ -1,0 +1,18 @@
+nav {
+  background-color:rgb(112, 127, 255);
+}
+nav a {
+  text-decoration: none;
+  display: inline-block;
+  background-color:rgb(112, 127, 255);
+  text-align: center;
+  color: white;
+  padding: 20px;
+  font-weight: bold;
+}
+nav a:hover {
+  background-color: rgb(112, 127, 255);
+}
+nav a.active {
+  background-color: rgb(23, 27, 255);
+}

@@ -1,0 +1,133 @@
+<div>
+  
+  <div style="width: 100%; text-align: center; margin-top: 20px; margin-bottom: 20px;">{{plan}}</div>
+
+  <div>
+
+    <div style="width: 30%; position: absolute;">
+
+      <div>
+        <b>Légende :</b>
+        <div style="display: inline-block; margin: 5px;">
+          <span style="background-color: rgba(238, 130, 238, 1); margin-right: 5px; padding: 5px;">
+            1<img src="assets/img/running.png" style="margin-left: 5px;"/>
+          </span>
+          : En cours d'exécution
+        </div>
+        <div style="display: inline-block;margin: 5px;">
+          <span style="background-color: rgba(116, 211, 123, 1); margin-right: 5px; padding: 5px;">
+            1<img src="assets/img/passed.png" style="margin-left: 5px;">
+          </span>
+          : Réussi
+        </div>
+        <div style="display: inline-block;margin: 5px;">
+          <span style="background-color: rgba(253, 115, 91, 1); margin-right: 5px; padding: 5px;">
+            1<img src="assets/img/fail.png" style="margin-left: 5px;">
+          </span>
+          : Erreur
+        </div>
+        <div style="display: inline-block;margin: 5px;">
+          <span style="background-color: rgba(255, 215, 106, 1); margin-right: 5px; padding: 5px;">
+            1<img src="assets/img/timeout.png" style="margin-left: 5px;">
+          </span>
+          : Timeout
+        </div>
+        <div style="display: inline-block;margin: 5px;">
+          <span style="background-color: rgba(200, 200, 200, 1); margin-right: 5px; padding: 5px;">
+            1<img src="assets/img/nonDefini.png" style="margin-left: 5px;">
+          </span>
+          : Non défini
+        </div>
+      </div>
+
+      <span *ngIf = "projects === undefined; then cond_noTests else cond_tests"
+      style="text-align: center;">
+      </span>
+
+      <ng-template #cond_noTests>
+        <div style="text-align: center;">Vous n'avez aucun tests.</div>
+      </ng-template>
+    
+      <ng-template #cond_tests>
+
+        <cdk-virtual-scroll-viewport itemSize="50" style="height: 400px;width: 100%;">
+
+          <div *ngFor="let project of projects" style="margin-top: 20px;">
+            <div class="projects">
+              <span style="font-weight: bold;">{{project.name}}</span>
+
+              <mat-selection-list 
+                [(ngModel)]="selectedOptions" 
+                (ngModelChange)="onNgModelChange($event)" 
+                [multiple]="false">
+                <mat-divider></mat-divider>
+                <mat-list-option 
+                  *ngFor="let build of project.builds"
+                  class="build"
+                  [value]="build.id">
+                  <div>
+                    <mat-divider></mat-divider>
+                    <div mat-line style="font-size: 14px;">{{build.name}}</div>
+
+                    <div mat-line style="color: black;">
+                      
+                      <div *ngIf="build.numberOfTestsByStatus.running !== undefined" style="display: inline-block; margin: 5px;">
+                        <div style="background-color: rgba(238, 130, 238, 1);margin-right: 5px; padding: 5px;">
+                          {{build.numberOfTestsByStatus.running}} <img src="assets/img/running.png">
+                        </div>
+                      </div>
+                      <div *ngIf="build.numberOfTestsByStatus.passed !== undefined" style="display: inline-block;margin: 5px;">
+                        <div style="background-color: rgb(116, 211, 123, 1);margin-right: 5px; padding: 5px;">
+                          {{build.numberOfTestsByStatus.passed}} <img src="assets/img/passed.png">
+                        </div>
+                      </div>
+                      <div *ngIf="build.numberOfTestsByStatus.fail !== undefined" style="display: inline-block;margin: 5px;">
+                        <div style="background-color: rgba(253, 115, 91, 1);margin-right: 5px; padding: 5px;">
+                          {{build.numberOfTestsByStatus.fail}} <img src="assets/img/fail.png">
+                        </div>
+                      </div>
+                      <div *ngIf="build.numberOfTestsByStatus.timeout !== undefined" style="display: inline-block;margin: 5px;">
+                        <div style="background-color: rgba(255, 215, 106, 1);margin-right: 5px; padding: 5px;">
+                          {{build.numberOfTestsByStatus.timeout}} <img src="assets/img/timeout.png">
+                        </div>
+                      </div>
+                      <div *ngIf="build.numberOfTestsByStatus.nonDefini !== undefined" style="display: inline-block;margin: 5px;">
+                        <div style="background-color: rgba(200, 200, 200, 1);margin-right: 5px; padding: 5px;">
+                          {{build.numberOfTestsByStatus.nonDefini}} <img src="assets/img/nonDefini.png">
+                        </div>
+                      </div>
+                    </div>    
+
+                  </div>
+                </mat-list-option>
+              </mat-selection-list>
+            
+            </div>
+          </div>
+
+        </cdk-virtual-scroll-viewport>
+
+      </ng-template>
+
+    </div>
+
+    <div style="width: 70%; margin-left: 30%;">
+      <span *ngIf = "tests === undefined; then cond_noBuildSelected else cond_buildSelected"
+        style="text-align: center;">
+      </span>
+
+      <ng-template #cond_noBuildSelected>
+        <div style="text-align: center;">Veuillez sélectionner un build.</div>
+      </ng-template>
+
+      <ng-template #cond_buildSelected>
+        <cdk-virtual-scroll-viewport itemSize="50" style="height: 450px;width: 100%;">
+          <app-testsOfBuild [dataSource]="tests"></app-testsOfBuild>
+        </cdk-virtual-scroll-viewport>
+      </ng-template>
+    </div>
+    
+
+  </div>
+
+</div>
